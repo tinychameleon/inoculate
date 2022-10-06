@@ -15,7 +15,10 @@ task "spec:all" do
   end
 end
 
-RSpec::Core::RakeTask.new(:spec)
+RSpec::Core::RakeTask.new(:spec) do
+  ENV["RBS_TEST_TARGET"] = "Inoculate,Inoculate::*"
+  ENV["RBS_TEST_LOGLEVEL"] = "error"
+end
 
 YARD::Rake::YardocTask.new do |t|
   t.files = %w[lib/**/*.rb - CHANGELOG.md]
