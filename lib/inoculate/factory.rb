@@ -5,14 +5,15 @@ require "digest"
 module Inoculate
   module Manufacturer
     # Registers and builds dependency injection modules.
+    # @todo building and registration needs to be thread-safe
     # @since 0.1.0
     class Factory
-      # The set of registered builders for dependency injection modules.
+      # The set of registered blueprints for dependency injection modules.
       # @return [Hash<Symbol, Hash>]
-      attr_reader :registered_builders
+      attr_reader :registered_blueprints
 
       def initialize
-        @registered_builders = {}
+        @registered_blueprints = {}
       end
 
       # Register a transient dependency.
@@ -41,17 +42,25 @@ module Inoculate
       def transient(name, builder = nil, &block)
         validate_builder_name name
         raise Errors::RequiresCallable unless builder.respond_to?(:call) || block
-        @registered_builders[name.to_sym] = {lifecycle: :transient, builder: builder || block, accessor_module: nil}
+
+        @registered_blueprints[name.to_sym] = {lifecycle: :transient, builder: builder || block, accessor_module: nil}
       end
 
       # Build the accessor module associated with a dependency name.
       #
       # @param name [Symbol] the dependency name to build an accessor module for
+      #
+      # @raise [Errors::UnknownName] if the dependency name is not registered
+      #
       # @return [Module] the accessor module for accessing instances of the dependency
       def build(name)
-        builder = @registered_builders.dig(name, :builder)
+        blueprint = @registered_blueprints[name]
+        raise Errors::UnknownName if blueprint.nil?
+        return blueprint[:accessor_module] unless blueprint[:accessor_module].nil?
+
         module_name = "I#{Digest::SHA1.hexdigest(name.to_s)}"
-        Providers.module_eval do
+        builder = blueprint[:builder]
+        blueprint[:accessor_module] = Providers.module_eval do
           const_set(module_name, Module.new do
             private define_method(name) { builder.call }
           end)
