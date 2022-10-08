@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-RSpec.describe Inoculate do
+RSpec.describe "Inoculate" do
   context "constants" do
     it "has a version number" do
       expect(Inoculate::VERSION).not_to be nil
     end
   end
 
-  context "initialization" do
+  skip "initialization" do
     it "requires a block" do
-      expect { Inoculate.initialize }.to raise_error Inoculate::Errors::InitializationRequiresBlock
+      expect { Inoculate.initialize }.to raise_error Inoculate::Errors::RequiresBlock
     end
 
     it "provides a container configuration object to the block" do

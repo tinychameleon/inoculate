@@ -5,5 +5,6 @@ module Inoculate; end
 
 require_relative "inoculate/version"
 require_relative "inoculate/errors"
-require_relative "inoculate/architect"
+require_relative "inoculate/manufacturer"
+require_relative "inoculate/factory"
 require_relative "inoculate/initialization"

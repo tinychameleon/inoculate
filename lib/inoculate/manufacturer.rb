@@ -2,6 +2,9 @@
 
 module Inoculate
   # TODO
-  class Architect
+  module Manufacturer
+    # TODO
+    module Providers
+    end
   end
 end

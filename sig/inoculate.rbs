@@ -4,12 +4,35 @@ module Inoculate
   module Errors
     class Error < StandardError
     end
-    class InitializationRequiresBlock < Error
+
+    class InvalidName < Error
+    end
+
+    class RequiresCallable < Error
     end
   end
 
-  class Architect
+  interface _ToSymbol
+    def to_sym: () -> Symbol
   end
 
-  def self.initialize: () { (Architect) -> void } -> void
+  type callable = ^() -> untyped
+  type lifecycle_name = :transient
+  type builder_name = Symbol
+  type blueprint = { lifecycle: lifecycle_name, builder: callable, accessor_module: instance? }
+
+  module Manufacturer
+    class Factory
+      attr_reader registered_builders: Hash[builder_name, blueprint]
+      def transient: (builder_name | _ToSymbol, callable?) -> void
+      def build: (builder_name) -> instance
+
+      private
+
+      def validate_builder_name: (builder_name) -> void
+    end
+
+    module Providers
+    end
+  end
 end

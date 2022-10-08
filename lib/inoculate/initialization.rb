@@ -7,12 +7,9 @@ module Inoculate
   #   Inoculate.initialize do |c|
   #     # TODO
   #   end
-  # @yield (Architect) a configuration object to manage dependency names and life-cycles
-  # @raise (Errors::InitializationRequiresBlock) when no block is given
+  # @yield TODO
+  # @raise (Errors::RequiresBlock) when no block is given
   def self.initialize
-    raise Errors::InitializationRequiresBlock unless block_given?
-
-    architect = Architect.new
-    yield architect
+    yield
   end
 end
