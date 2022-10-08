@@ -53,7 +53,7 @@ module Inoculate
         module_name = "I#{Digest::SHA1.hexdigest(name.to_s)}"
         Providers.module_eval do
           const_set(module_name, Module.new do
-            define_method(name) { builder.call }
+            private define_method(name) { builder.call }
           end)
         end
       end

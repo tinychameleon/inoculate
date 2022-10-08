@@ -64,7 +64,7 @@ RSpec.describe "Inoculate::Manufacturer::Factory" do
 
       it "creates a provider module based on the builder name" do
         expect(accessor_module.name).to eq "Inoculate::Manufacturer::Providers::I4cf5bc59bee9e1c44c6254b5f84e7f066bd8e5fe"
-        expect(accessor_module.instance_methods).to include(name)
+        expect(accessor_module.private_instance_methods).to include(name)
       end
 
       context "instance inclusion" do
