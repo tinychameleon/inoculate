@@ -78,8 +78,8 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/inoculate.rb<span class="defines">,<br />
-  lib/inoculate/errors.rb,<br /> lib/inoculate/version.rb,<br /> lib/inoculate/architect.rb,<br /> lib/inoculate/initialization.rb</span>
+    <dd>lib/inoculate/initialization.rb<span class="defines">,<br />
+  lib/inoculate/errors.rb,<br /> lib/inoculate/factory.rb,<br /> lib/inoculate/version.rb,<br /> lib/inoculate/manufacturer.rb</span>
 </dd>
   </dl>
   
@@ -88,7 +88,7 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<p>TODO: Module-level documentation</p>
+<p>TODO</p>
 
 
   </div>
@@ -100,11 +100,9 @@
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Inoculate/Errors.html" title="Inoculate::Errors (module)">Errors</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Inoculate/Errors.html" title="Inoculate::Errors (module)">Errors</a></span>, <span class='object_link'><a href="Inoculate/Manufacturer.html" title="Inoculate::Manufacturer (module)">Manufacturer</a></span>
     
   
-    
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Inoculate/Architect.html" title="Inoculate::Architect (class)">Architect</a></span>
     
   
 </p>
@@ -153,7 +151,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-class_method" title="initialize (class method)">.<strong>initialize</strong> {|Architect| ... } &#x21d2; Object </a>
+      <a href="#initialize-class_method" title="initialize (class method)">.<strong>initialize</strong> { ... } &#x21d2; Object </a>
     
 
     
@@ -186,7 +184,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="initialize-class_method">
   
-    .<strong>initialize</strong> {|Architect| ... } &#x21d2; <tt>Object</tt> 
+    .<strong>initialize</strong> { ... } &#x21d2; <tt>Object</tt> 
   
 
   
@@ -230,31 +228,13 @@
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="Inoculate/Architect.html" title="Inoculate::Architect (class)">Architect</a></span></tt>)</span>
+        <span class='type'></span>
       
       
       
-        &mdash;
+        
         <div class='inline'>
-<p>a configuration object to manage dependency names and life-cycles</p>
-</div>
-      
-    </li>
-  
-</ul>
-<p class="tag_title">Raises:</p>
-<ul class="raise">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="Inoculate/Errors/InitializationRequiresBlock.html" title="Inoculate::Errors::InitializationRequiresBlock (class)">Errors::InitializationRequiresBlock</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>when no block is given</p>
+<p>TODO</p>
 </div>
       
     </li>
@@ -269,19 +249,13 @@
 
 12
 13
-14
-15
-16
-17</pre>
+14</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/inoculate/initialization.rb', line 12</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_initialize'>initialize</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Inoculate/Errors.html" title="Inoculate::Errors (module)">Errors</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Inoculate/Errors/InitializationRequiresBlock.html" title="Inoculate::Errors::InitializationRequiresBlock (class)">InitializationRequiresBlock</a></span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
-
-  <span class='id identifier rubyid_architect'>architect</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Inoculate/Architect.html" title="Inoculate::Architect (class)">Architect</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-  <span class='kw'>yield</span> <span class='id identifier rubyid_architect'>architect</span>
+  <span class='kw'>yield</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -293,7 +267,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Oct  6 08:40:05 2022 by
+  Generated on Fri Oct  7 21:50:10 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.2).
 </div>

@@ -6,9 +6,6 @@ module Inoculate
     # Base type for all Inoculate errors.
     class Error < StandardError; end
 
-    # Raised when a block is required to register a dependency or initialize Inoculate.
-    class RequiresBlock < Error; end
-
     # Raised when the user attempts to register a dependency with a name that can't be converted to a symbol.
     class InvalidName < Error; end
 

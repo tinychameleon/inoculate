@@ -15,14 +15,12 @@ task "spec:all" do
   end
 end
 
-RSpec::Core::RakeTask.new(:spec) do
-  ENV["RBS_TEST_TARGET"] = "Inoculate,Inoculate::*"
-  ENV["RBS_TEST_LOGLEVEL"] = "error"
-end
+RSpec::Core::RakeTask.new(:spec)
 
 YARD::Rake::YardocTask.new do |t|
+  t.before = -> { sh("rm -r ./docs") }
   t.files = %w[lib/**/*.rb - CHANGELOG.md]
-  t.options = %w[--private -o ./docs]
+  t.options = %w[-o ./docs]
 end
 
 require "standard/rake"

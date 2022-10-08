@@ -19,13 +19,13 @@ module Inoculate
   type callable = ^() -> untyped
   type lifecycle_name = :transient
   type builder_name = Symbol
-  type blueprint = { lifecycle: lifecycle_name, builder: callable, accessor_module: instance? }
+  type blueprint = { lifecycle: lifecycle_name, builder: callable, accessor_module: Module? }
 
   module Manufacturer
     class Factory
       attr_reader registered_builders: Hash[builder_name, blueprint]
       def transient: (builder_name | _ToSymbol, callable?) -> void
-      def build: (builder_name) -> instance
+      def build: (builder_name) -> Module
 
       private
 
