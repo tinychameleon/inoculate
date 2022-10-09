@@ -5,7 +5,7 @@ require_relative "./shared_contexts"
 RSpec.describe "Inoculate::Porter" do
   include_context "clean providers"
 
-  before do
+  before(:all) do
     Inoculate.factory.transient(:a) { 1 }
     Inoculate.factory.transient(:b) { 2 }
     Inoculate.factory.transient(:c) { 3 }

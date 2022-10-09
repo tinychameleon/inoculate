@@ -8,6 +8,9 @@ module Inoculate
     class InvalidName < Error
     end
 
+    class AlreadyRegistered < Error
+    end
+
     class UnknownName < Error
     end
 

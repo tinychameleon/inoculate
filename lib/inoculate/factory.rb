@@ -39,8 +39,10 @@ module Inoculate
       # @raise [Errors::RequiresCallable] if no builder or block is provided
       # @raise [Errors::InvalidName] if the name is not a symbol, cannot be converted to a symbol,
       #                              or is not a valid attribute name
+      # @raise [Errors::AlreadyRegistered] if the name has been registered previously
       def transient(name, builder = nil, &block)
         validate_builder_name name
+        raise Errors::AlreadyRegistered if @registered_blueprints.has_key? name
         raise Errors::RequiresCallable unless builder.respond_to?(:call) || block
 
         @registered_blueprints[name.to_sym] = {lifecycle: :transient, builder: builder || block, accessor_module: nil}

@@ -14,6 +14,13 @@ RSpec.describe "Inoculate::Manufacturer::Factory" do
   end
 
   context "builders" do
+    context "registering" do
+      it "does not silently shadow registered names" do
+        subject.transient(:service, -> { 1 })
+        expect { subject.transient(:service, -> { 2 }) }.to raise_error Inoculate::Errors::AlreadyRegistered
+      end
+    end
+
     context "transients" do
       it "can be registered" do
         callable = -> {}
