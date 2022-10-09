@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
+require_relative "./shared_contexts"
+
 RSpec.describe "Inoculate::Manufacturer::Factory" do
   subject(:factory) { Inoculate::Manufacturer::Factory.new }
+
+  include_context "clean providers"
 
   context "initialization" do
     it "has no registered blueprints" do

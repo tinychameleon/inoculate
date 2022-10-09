@@ -88,7 +88,7 @@
     
 <p>Delivers requested dependencies to user classes.</p>
 
-<p>The sole method <span class='object_link'><a href="Porter/ClassMethods.html#inoculate_with-instance_method" title="Inoculate::Porter::ClassMethods#inoculate_with (method)">ClassMethods#inoculate_with</a></span> is named to avoid collisions with other libraries. You can alias it to something that makes your codebase legible.</p>
+<p>The default method <code>inoculate_with</code> is named to avoid collisions with other libraries. You can alias it to something that makes your codebase legible.</p>
 
 
   </div>
@@ -114,14 +114,11 @@
     
       
         <p class="example_title"><div class='inline'>
-<p>With Aliasing</p>
+<p>With Aliasing Include</p>
 </div></p>
       
       <pre class="example code"><code><span class='kw'>class</span> <span class='const'>Base</span>
-  <span class='id identifier rubyid_include'>include</span> <span class='const'><span class='object_link'><a href="../Inoculate.html" title="Inoculate (module)">Inoculate</a></span></span><span class='op'>::</span><span class='const'>Porter</span>
-  <span class='kw'>class</span> <span class='op'>&lt;&lt;</span> <span class='kw'>self</span>
-    <span class='id identifier rubyid_alias_method'>alias_method</span> <span class='symbol'>:depend_on</span><span class='comma'>,</span> <span class='symbol'>:inoculate_with</span>
-  <span class='kw'>end</span>
+  <span class='id identifier rubyid_include'>include</span> <span class='const'><span class='object_link'><a href="../Inoculate.html" title="Inoculate (module)">Inoculate</a></span></span><span class='op'>::</span><span class='const'>Porter</span><span class='lbracket'>[</span><span class='symbol'>:depend_on</span><span class='rbracket'>]</span>
 <span class='kw'>end</span>
 
 <span class='kw'>class</span> <span class='const'>Child</span> <span class='op'>&lt;</span> <span class='const'>Base</span>
@@ -147,29 +144,280 @@
   
 </ul>
 
-</div><h2>Defined Under Namespace</h2>
-<p class="children">
+</div>
+
+
+
+
+
+
   
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Porter/ClassMethods.html" title="Inoculate::Porter::ClassMethods (module)">ClassMethods</a></span>
+      <a href="#[]-class_method" title="[] (class method)">.<strong>[]</strong>(method_name)  &#x21d2; Module </a>
     
+
+    
+  </span>
   
-    
   
-</p>
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a dependency injection module with your chosen method name.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#included-class_method" title="included (class method)">.<strong>included</strong>(base)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Including this module makes the default <code>inoculate_with</code> method available.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
 
 
 
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="[]-class_method">
+  
+    .<strong>[]</strong>(method_name)  &#x21d2; <tt>Module</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a dependency injection module with your chosen method name.</p>
 
 
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>method_name</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the dependency injection method name</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Module</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a dependency injection module for inclusion in classes.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
 
 
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/inoculate/porter.rb', line 39</span>
 
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='op'>[]</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_m'>m</span> <span class='op'>=</span> <span class='const'>Module</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_define_method'>define_method</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='op'>*</span><span class='id identifier rubyid_names'>names</span><span class='op'>|</span>
+      <span class='id identifier rubyid_names'>names</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='op'>|</span>
+        <span class='id identifier rubyid_include'>include</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Inoculate.html" title="Inoculate (module)">Inoculate</a></span></span><span class='period'>.</span><span class='id identifier rubyid_factory'><span class='object_link'><a href="../Inoculate.html#factory-class_method" title="Inoculate.factory (method)">factory</a></span></span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_inclusion'>inclusion</span> <span class='op'>=</span> <span class='const'>Module</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_inclusion'>inclusion</span><span class='period'>.</span><span class='id identifier rubyid_singleton_class'>singleton_class</span><span class='period'>.</span><span class='id identifier rubyid_define_method'>define_method</span><span class='lparen'>(</span><span class='symbol'>:included</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_base'>base</span><span class='op'>|</span>
+      <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_extend'>extend</span> <span class='id identifier rubyid_m'>m</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_inclusion'>inclusion</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="included-class_method">
+  
+    .<strong>included</strong>(base)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Including this module makes the default <code>inoculate_with</code> method available.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>base</span>
+      
+      
+        <span class='type'>(<tt>Class</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the class this module is included within</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+58
+59
+60</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/inoculate/porter.rb', line 58</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_included'>included</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_include'>include</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:inoculate_with</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
 
 </div>
 
       <div id="footer">
-  Generated on Sat Oct  8 08:18:54 2022 by
+  Generated on Sat Oct  8 17:14:07 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.2).
 </div>
