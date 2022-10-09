@@ -3,14 +3,18 @@
 module Inoculate
   # Configure dependencies through a restricted API.
   class Configurer
-    def initialize(factory)
-      @factory = factory
+    def initialize(manufacturer)
+      @manufacturer = manufacturer
     end
 
     # Register a transient dependency.
-    # @see Manufacturer::Factory#transient
+    # @see Manufacturer#transient
     def transient(name, builder = nil, &block)
-      @factory.transient(name, builder, &block)
+      manufacturer.transient(name, builder, &block)
     end
+
+    private
+
+    attr_reader :manufacturer
   end
 end

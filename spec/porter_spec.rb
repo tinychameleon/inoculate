@@ -2,13 +2,13 @@
 
 require_relative "./shared_contexts"
 
-RSpec.describe "Inoculate::Porter" do
+RSpec.describe "Inoculate::Porter", skip: true do
   include_context "clean providers"
 
   before(:all) do
-    Inoculate.factory.transient(:a) { 1 }
-    Inoculate.factory.transient(:b) { 2 }
-    Inoculate.factory.transient(:c) { 3 }
+    Inoculate.manufacturer.transient(:a) { 1 }
+    Inoculate.manufacturer.transient(:b) { 2 }
+    Inoculate.manufacturer.transient(:c) { 3 }
   end
 
   context "default usage" do

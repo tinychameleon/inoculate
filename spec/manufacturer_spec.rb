@@ -2,14 +2,14 @@
 
 require_relative "./shared_contexts"
 
-RSpec.describe "Inoculate::Manufacturer::Factory" do
-  subject(:factory) { Inoculate::Manufacturer::Factory.new }
+RSpec.describe "Inoculate::Manufacturer" do
+  subject(:manufacturer) { Inoculate::Manufacturer.new }
 
   include_context "clean providers"
 
   context "initialization" do
     it "has no registered blueprints" do
-      expect(factory.registered_blueprints).to be_empty
+      expect(manufacturer.registered_blueprints).to be_empty
     end
   end
 
@@ -63,27 +63,27 @@ RSpec.describe "Inoculate::Manufacturer::Factory" do
 
   context "building" do
     # noinspection RubyMismatchedArgumentType
-    subject(:accessor_module) { factory.build(name) }
+    subject(:accessor_module) { manufacturer.build(name) }
     let(:lifecycle) { :transient }
     let(:name) { :service }
     let(:builder_spy) { spy("object") }
 
     before do
-      factory.send(lifecycle, name) { builder_spy.new }
+      manufacturer.send(lifecycle, name) { builder_spy.new }
     end
 
     it "creates a provider module based on the builder name" do
-      expect(accessor_module.name).to eq "Inoculate::Manufacturer::Providers::I4cf5bc59bee9e1c44c6254b5f84e7f066bd8e5fe"
+      expect(accessor_module.name).to eq "Inoculate::Providers::I4cf5bc59bee9e1c44c6254b5f84e7f066bd8e5fe"
       expect(accessor_module.private_instance_methods).to include(name)
     end
 
     it "creates a provider once" do
       # noinspection RubyMismatchedArgumentType
-      expect(factory.build(name).object_id).to eq factory.build(name).object_id
+      expect(manufacturer.build(name).object_id).to eq manufacturer.build(name).object_id
     end
 
     it "fails for unknown dependency names" do
-      expect { factory.build(:orange) }.to raise_error Inoculate::Errors::UnknownName
+      expect { manufacturer.build(:orange) }.to raise_error Inoculate::Errors::UnknownName
     end
 
     context "transients" do

@@ -2,8 +2,8 @@
 
 RSpec.shared_context "clean providers" do
   after do
-    Inoculate::Manufacturer::Providers.constants.each do |c|
-      Inoculate::Manufacturer::Providers.send(:remove_const, c)
+    Inoculate::Providers.constants.each do |c|
+      Inoculate::Providers.send(:remove_const, c)
     end
   end
 end

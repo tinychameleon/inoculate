@@ -1,6 +1,15 @@
 module Inoculate
   VERSION: String
 
+  interface _ToSymbol
+    def to_sym: () -> Symbol
+  end
+
+  type callable = ^() -> untyped
+  type lifecycle_name = :transient
+  type builder_name = Symbol
+  type blueprint = { lifecycle: lifecycle_name, builder: callable, accessor_module: Module? }
+
   module Errors
     class Error < StandardError
     end
@@ -18,37 +27,33 @@ module Inoculate
     end
   end
 
-  interface _ToSymbol
-    def to_sym: () -> Symbol
+  module Providers
   end
 
-  type callable = ^() -> untyped
-  type lifecycle_name = :transient
-  type builder_name = Symbol
-  type blueprint = { lifecycle: lifecycle_name, builder: callable, accessor_module: Module? }
+  class Manufacturer
+    attr_reader registered_blueprints: Hash[builder_name, blueprint]
+    def transient: (builder_name | _ToSymbol, callable?) ?{ () -> void } -> void
+    def build: (builder_name) -> Module
 
-  module Manufacturer
-    class Factory
-      attr_reader registered_blueprints: Hash[builder_name, blueprint]
-      def transient: (builder_name | _ToSymbol, callable?) -> void
-      def build: (builder_name) -> Module
+    private
 
-      private
-
-      def validate_builder_name: (builder_name) -> void
-    end
-
-    module Providers
-    end
+    def validate_builder_name: (builder_name) -> void
   end
 
   class Configurer
-    def initialize: (Manufacturer::Factory) -> void
+    def initialize: (Manufacturer) -> void
 
     def transient: (builder_name | _ToSymbol, callable?) -> void
+
+    private
+
+    attr_reader manufacturer: Manufacturer
   end
 
   module Porter
     def self.[]: (Symbol) -> Module
   end
+
+  attr_reader manufacturer: Manufacturer
+  def self.initialize: () { (Configurer) -> void } -> void
 end

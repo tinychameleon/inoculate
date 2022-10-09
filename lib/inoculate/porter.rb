@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
 module Inoculate
-  # @todo This should be refactored into a better API.
-  def self.factory
-    @factory ||= Manufacturer::Factory.new
-  end
-
   # Delivers requested dependencies to user classes.
   #
   # The default method +inoculate_with+ is named to avoid collisions with other
@@ -40,14 +35,14 @@ module Inoculate
       m = Module.new do
         define_method(method_name) do |*names|
           names.each do |name|
-            include(Inoculate.factory.build(name))
+            include(Inoculate.manufacturer.build(name))
           end
         end
       end
 
       inclusion = Module.new
       inclusion.singleton_class.define_method(:included) do |base|
-          base.extend m
+        base.extend m
       end
       inclusion
     end
