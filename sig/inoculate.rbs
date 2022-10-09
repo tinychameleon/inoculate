@@ -40,8 +40,6 @@ module Inoculate
   end
 
   module Porter
-    module ClassMethods
-      def inoculate_with: (*builder_name) -> void
-    end
+    def self.[]: (Symbol) -> Module
   end
 end
