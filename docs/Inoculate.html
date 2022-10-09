@@ -79,7 +79,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>lib/inoculate/initialization.rb<span class="defines">,<br />
-  lib/inoculate/errors.rb,<br /> lib/inoculate/porter.rb,<br /> lib/inoculate/factory.rb,<br /> lib/inoculate/version.rb,<br /> lib/inoculate/manufacturer.rb</span>
+  lib/inoculate/errors.rb,<br /> lib/inoculate/porter.rb,<br /> lib/inoculate/factory.rb,<br /> lib/inoculate/version.rb,<br /> lib/inoculate/configurer.rb,<br /> lib/inoculate/manufacturer.rb</span>
 </dd>
   </dl>
   
@@ -103,6 +103,8 @@
       <strong class="modules">Modules:</strong> <span class='object_link'><a href="Inoculate/Errors.html" title="Inoculate::Errors (module)">Errors</a></span>, <span class='object_link'><a href="Inoculate/Manufacturer.html" title="Inoculate::Manufacturer (module)">Manufacturer</a></span>, <span class='object_link'><a href="Inoculate/Porter.html" title="Inoculate::Porter (module)">Porter</a></span>
     
   
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Inoculate/Configurer.html" title="Inoculate::Configurer (class)">Configurer</a></span>
     
   
 </p>
@@ -136,6 +138,40 @@
 
 
 
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#factory-instance_method" title="#factory (instance method)">#<strong>factory</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute factory.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
 
 
 
@@ -197,6 +233,54 @@
     </ul>
   
 
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="factory-instance_method">
+  
+    #<strong>factory</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute factory.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+5
+6
+7</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/inoculate/initialization.rb', line 5</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_factory'>factory</span>
+  <span class='ivar'>@factory</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
 
 
   <div id="class_method_details" class="method_details_list">
@@ -316,15 +400,17 @@
       <pre class="lines">
 
 
-12
-13
-14</pre>
+15
+16
+17
+18</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/inoculate/initialization.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/inoculate/initialization.rb', line 15</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_initialize'>initialize</span>
-  <span class='kw'>yield</span>
+  <span class='ivar'>@factory</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Inoculate/Manufacturer.html" title="Inoculate::Manufacturer (module)">Manufacturer</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Inoculate/Manufacturer/Factory.html" title="Inoculate::Manufacturer::Factory (class)">Factory</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Inoculate/Manufacturer/Factory.html#initialize-instance_method" title="Inoculate::Manufacturer::Factory#initialize (method)">new</a></span></span>
+  <span class='kw'>yield</span> <span class='const'><span class='object_link'><a href="Inoculate/Configurer.html" title="Inoculate::Configurer (class)">Configurer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Inoculate/Configurer.html#initialize-instance_method" title="Inoculate::Configurer#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@factory</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -336,7 +422,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Oct  8 17:14:07 2022 by
+  Generated on Sun Oct  9 13:17:57 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.2).
 </div>

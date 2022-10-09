@@ -42,6 +42,12 @@ module Inoculate
     end
   end
 
+  class Configurer
+    def initialize: (Manufacturer::Factory) -> void
+
+    def transient: (builder_name | _ToSymbol, callable?) -> void
+  end
+
   module Porter
     def self.[]: (Symbol) -> Module
   end
