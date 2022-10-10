@@ -296,8 +296,6 @@
       <pre class="lines">
 
 
-34
-35
 36
 37
 38
@@ -310,16 +308,18 @@
 45
 46
 47
-48</pre>
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/inoculate/porter.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'lib/inoculate/porter.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='op'>[]</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_m'>m</span> <span class='op'>=</span> <span class='const'>Module</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_define_method'>define_method</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='op'>*</span><span class='id identifier rubyid_names'>names</span><span class='op'>|</span>
       <span class='id identifier rubyid_names'>names</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='op'>|</span>
-        <span class='id identifier rubyid_include'>include</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Inoculate.html" title="Inoculate (module)">Inoculate</a></span></span><span class='period'>.</span><span class='id identifier rubyid_manufacturer'><span class='object_link'><a href="../Inoculate.html#manufacturer-instance_method" title="Inoculate#manufacturer (method)">manufacturer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_include'>include</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Inoculate.html" title="Inoculate (module)">Inoculate</a></span></span><span class='period'>.</span><span class='id identifier rubyid_manufacturer'>manufacturer</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
@@ -397,12 +397,12 @@
       <pre class="lines">
 
 
-53
-54
-55</pre>
+57
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/inoculate/porter.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/inoculate/porter.rb', line 57</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_included'>included</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_include'>include</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:inoculate_with</span><span class='rbracket'>]</span>
@@ -417,7 +417,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sun Oct  9 14:01:04 2022 by
+  Generated on Mon Oct 10 13:05:05 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.2).
 </div>

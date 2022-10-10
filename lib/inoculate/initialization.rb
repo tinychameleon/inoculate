@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
-# TODO
+# Inoculate is a small, thread-safe dependency injection library configured entirely with Ruby.
+# It provides several life-cycles and provides dependency access through private accessors.
+#
+# @since 0.1.0
 module Inoculate
   # The main configuration entrypoint for Inoculate. Use this to set up named dependencies.
   #
@@ -18,11 +21,13 @@ module Inoculate
   #   end
   #
   # @yieldparam config [Configurer] a configuration object to register dependencies
+  #
+  # @since 0.1.0
   def self.initialize
     yield Configurer.new(manufacturer)
   end
 
-  # @private
+  # @!visibility private
   def self.manufacturer
     @manufacturer ||= Manufacturer.new
   end

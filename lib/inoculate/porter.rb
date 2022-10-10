@@ -31,6 +31,8 @@ module Inoculate
     #
     # @param method_name [Symbol] the dependency injection method name
     # @return [Module] a dependency injection module for inclusion in classes.
+    #
+    # @since 0.1.0
     def self.[](method_name)
       m = Module.new do
         define_method(method_name) do |*names|
@@ -50,6 +52,8 @@ module Inoculate
     # Including this module makes the default +inoculate_with+ method available.
     #
     # @param base [Class] the class this module is included within
+    #
+    # @since 0.1.0
     def self.included(base)
       base.include self[:inoculate_with]
     end

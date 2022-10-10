@@ -4,11 +4,17 @@ require "digest"
 
 module Inoculate
   # Registers and builds dependency injection modules.
-  # @todo building and registration needs to be thread-safe
+  # @todo building needs to be thread-safe
+  # @todo singleton life cycle
+  # @todo instance life cycle
+  # @todo thread singleton life cycle
+  #
   # @since 0.1.0
   class Manufacturer
     # The set of registered blueprints for dependency injection modules.
     # @return [Hash<Symbol, Hash>]
+    #
+    # @since 0.1.0
     attr_reader :registered_blueprints
 
     def initialize
@@ -39,6 +45,8 @@ module Inoculate
     # @raise [Errors::InvalidName] if the name is not a symbol, cannot be converted to a symbol,
     #                              or is not a valid attribute name
     # @raise [Errors::AlreadyRegistered] if the name has been registered previously
+    #
+    # @since 0.1.0
     def transient(name, builder = nil, &block)
       validate_builder_name name
       raise Errors::AlreadyRegistered if @registered_blueprints.has_key? name
@@ -54,6 +62,8 @@ module Inoculate
     # @raise [Errors::UnknownName] if the dependency name is not registered
     #
     # @return [Module] the accessor module for accessing instances of the dependency
+    #
+    # @since 0.1.0
     def build(name)
       blueprint = @registered_blueprints[name]
       raise Errors::UnknownName if blueprint.nil?
