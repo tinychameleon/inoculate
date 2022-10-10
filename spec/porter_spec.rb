@@ -15,7 +15,7 @@ RSpec.describe "Inoculate::Porter" do
 
   context "default usage" do
     subject(:instance) do
-      # noinspection RbsMissingTypeSignature
+      # noinspection RbsMissingTypeSignature,RubyResolve
       class InjectionExample # rubocop:disable Lint/ConstantDefinitionInBlock
         include Inoculate::Porter
         inoculate_with :a, :c
@@ -32,13 +32,13 @@ RSpec.describe "Inoculate::Porter" do
 
   context "using aliases" do
     subject(:instance) do
-      # noinspection RbsMissingTypeSignature
+      # noinspection RbsMissingTypeSignature,RubyResolve
       class AliasedInjectionExample # rubocop:disable Lint/ConstantDefinitionInBlock
         include Inoculate::Porter[:inject]
         inject :b, :c
       end
 
-      # noinspection RbsMissingTypeSignature
+      # noinspection RbsMissingTypeSignature,RubyResolve
       class AliasDoesNotPersistExample # rubocop:disable Lint/ConstantDefinitionInBlock
         include Inoculate::Porter
         inoculate_with :a
