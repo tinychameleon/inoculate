@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    inoculate (0.0.0)
+    inoculate (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -14,7 +14,6 @@ GEM
       ast (~> 2.4.1)
     rainbow (3.1.1)
     rake (13.0.6)
-    rbs (2.6.0)
     regexp_parser (2.6.0)
     rexml (3.2.5)
     rspec (3.11.0)
@@ -61,7 +60,6 @@ PLATFORMS
 DEPENDENCIES
   inoculate!
   rake (~> 13.0)
-  rbs (~> 2.6)
   rspec (~> 3.11)
   standard (~> 1.16)
   yard (~> 0.9)
