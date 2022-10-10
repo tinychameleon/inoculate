@@ -2,8 +2,6 @@
 
 # TODO
 module Inoculate
-  attr_reader :manufacturer
-
   # The main configuration entrypoint for Inoculate. Use this to set up named dependencies.
   #
   # @note This method is not thread safe.
@@ -21,7 +19,11 @@ module Inoculate
   #
   # @yieldparam config [Configurer] a configuration object to register dependencies
   def self.initialize
-    @manufacturer = Manufacturer.new
-    yield Configurer.new(@manufacturer)
+    yield Configurer.new(manufacturer)
+  end
+
+  # @private
+  def self.manufacturer
+    @manufacturer ||= Manufacturer.new
   end
 end

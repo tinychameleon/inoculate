@@ -54,6 +54,8 @@ module Inoculate
     def self.[]: (Symbol) -> Module
   end
 
-  attr_reader manufacturer: Manufacturer
   def self.initialize: () { (Configurer) -> void } -> void
+
+  # "Private"
+  def self.manufacturer: () -> Manufacturer
 end
