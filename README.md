@@ -3,6 +3,8 @@
 Inoculate is a small, thread-safe dependency injection library configured entirely with Ruby.
 It provides several life-cycles and provides dependency access through private accessors.
 
+[![Gem Version](https://badge.fury.io/rb/inoculate.svg)](https://badge.fury.io/rb/inoculate)
+
 ---
 
 ## What's in the box?
