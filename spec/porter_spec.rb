@@ -52,4 +52,20 @@ RSpec.describe "Inoculate::Porter" do
       expect(instance.private_methods).not_to include(:a)
     end
   end
+
+  context "unknown dependencies" do
+    subject(:instance) do
+      # noinspection RbsMissingTypeSignature,RubyResolve
+      class UnknownDependencyExample # rubocop:disable Lint/ConstantDefinitionInBlock
+        include Inoculate::Porter
+        inoculate_with :unknown
+      end
+
+      UnknownDependencyExample.new
+    end
+
+    it "does not allow unknown names to be silently depended upon" do
+      expect { subject }.to raise_error Inoculate::Errors::UnknownName
+    end
+  end
 end

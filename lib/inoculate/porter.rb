@@ -37,7 +37,10 @@ module Inoculate
       m = Module.new do
         define_method(method_name) do |*names|
           names.each do |name|
-            include(Inoculate.manufacturer.build(name))
+            mod = Inoculate.manufacturer.registered_blueprints.dig(name, :accessor_module)
+            raise Errors::UnknownName if mod.nil?
+
+            include(mod)
           end
         end
       end

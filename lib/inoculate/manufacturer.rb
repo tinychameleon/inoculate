@@ -4,7 +4,6 @@ require "digest"
 
 module Inoculate
   # Registers and builds dependency injection modules.
-  # @todo building needs to be thread-safe
   # @todo singleton life cycle
   # @todo instance life cycle
   # @todo thread singleton life cycle
@@ -52,33 +51,24 @@ module Inoculate
       raise Errors::AlreadyRegistered if @registered_blueprints.has_key? name
       raise Errors::RequiresCallable unless builder.respond_to?(:call) || block
 
-      @registered_blueprints[name.to_sym] = {lifecycle: :transient, builder: builder || block, accessor_module: nil}
+      blueprint_name = name.to_sym
+      @registered_blueprints[blueprint_name] = {
+        lifecycle: :transient,
+        builder: builder || block,
+        accessor_module: build_module(blueprint_name, :transient, builder || block)
+      }
     end
 
-    # Build the accessor module associated with a dependency name.
-    #
-    # @param name [Symbol] the dependency name to build an accessor module for
-    #
-    # @raise [Errors::UnknownName] if the dependency name is not registered
-    #
-    # @return [Module] the accessor module for accessing instances of the dependency
-    #
-    # @since 0.1.0
-    def build(name)
-      blueprint = @registered_blueprints[name]
-      raise Errors::UnknownName if blueprint.nil?
-      return blueprint[:accessor_module] unless blueprint[:accessor_module].nil?
+    private
 
+    def build_module(name, lifecycle, builder)
       module_name = "I#{Digest::SHA1.hexdigest(name.to_s)}"
-      builder = blueprint[:builder]
-      blueprint[:accessor_module] = Providers.module_eval do
+      Providers.module_eval do
         const_set(module_name, Module.new do
           private define_method(name) { builder.call }
         end)
       end
     end
-
-    private
 
     def validate_builder_name(name)
       raise Errors::InvalidName, "name must be a symbol or convert to one" unless name.respond_to? :to_sym

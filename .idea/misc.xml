@@ -3,7 +3,4 @@
   <component name="ProjectRootManager" version="2" project-jdk-name="rbenv: 3.1.2" project-jdk-type="RUBY_SDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
-  <component name="RbsRubysigsRootManager">
-    <isRbsGemPresent>true</isRbsGemPresent>
-  </component>
 </project>

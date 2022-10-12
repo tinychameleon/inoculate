@@ -7,8 +7,6 @@
 module Inoculate
   # The main configuration entrypoint for Inoculate. Use this to set up named dependencies.
   #
-  # @note This method is not thread safe.
-  #
   # @example A simple dependency configuration
   #   Inoculate.initialize do |config|
   #     config.transient(:http) { Faraday }

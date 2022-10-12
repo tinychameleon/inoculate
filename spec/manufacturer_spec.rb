@@ -25,7 +25,10 @@ RSpec.describe "Inoculate::Manufacturer" do
       it "can be registered" do
         callable = -> {}
         subject.transient(:service, callable)
-        expect(subject.registered_blueprints[:service]).to eq(lifecycle: :transient, builder: callable, accessor_module: nil)
+        actual = subject.registered_blueprints[:service]
+        expect(actual[:lifecycle]).to eq :transient
+        expect(actual[:builder]).to eq callable
+        expect(actual[:accessor_module]).to be_an_instance_of(Module)
       end
 
       it "can be registered with a block" do
@@ -63,27 +66,14 @@ RSpec.describe "Inoculate::Manufacturer" do
 
   context "building" do
     # noinspection RubyMismatchedArgumentType
-    subject(:accessor_module) { manufacturer.build(name) }
+    subject(:accessor_module) { manufacturer.send(lifecycle, name) { builder_spy.new }[:accessor_module] }
     let(:lifecycle) { :transient }
     let(:name) { :service }
     let(:builder_spy) { spy("object") }
 
-    before do
-      manufacturer.send(lifecycle, name) { builder_spy.new }
-    end
-
     it "creates a provider module based on the builder name" do
       expect(accessor_module.name).to eq "Inoculate::Providers::I4cf5bc59bee9e1c44c6254b5f84e7f066bd8e5fe"
       expect(accessor_module.private_instance_methods).to include(name)
-    end
-
-    it "creates a provider once" do
-      # noinspection RubyMismatchedArgumentType
-      expect(manufacturer.build(name).object_id).to eq manufacturer.build(name).object_id
-    end
-
-    it "fails for unknown dependency names" do
-      expect { manufacturer.build(:orange) }.to raise_error Inoculate::Errors::UnknownName
     end
 
     context "transients" do

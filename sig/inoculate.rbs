@@ -33,11 +33,6 @@ module Inoculate
   class Manufacturer
     attr_reader registered_blueprints: Hash[builder_name, blueprint]
     def transient: (builder_name | _ToSymbol, callable?) ?{ () -> void } -> void
-    def build: (builder_name) -> Module
-
-    private
-
-    def validate_builder_name: (builder_name) -> void
   end
 
   class Configurer
