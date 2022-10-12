@@ -6,7 +6,7 @@ module Inoculate
   end
 
   type callable = ^() -> untyped
-  type lifecycle_name = :transient
+  type lifecycle_name = :transient | :instance
   type builder_name = Symbol
   type blueprint = { lifecycle: lifecycle_name, factory: callable, accessor_module: Module? }
 
@@ -33,12 +33,14 @@ module Inoculate
   class Manufacturer
     attr_reader registered_blueprints: Hash[builder_name, blueprint]
     def transient: (builder_name | _ToSymbol) { () -> void } -> void
+    def instance: (builder_name | _ToSymbol) { () -> void } -> void
   end
 
   class Configurer
     def initialize: (Manufacturer) -> void
 
     def transient: (builder_name | _ToSymbol) { () -> void } -> nil
+    def instance: (builder_name | _ToSymbol) { () -> void } -> nil
 
     private
 

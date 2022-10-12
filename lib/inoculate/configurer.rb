@@ -18,6 +18,15 @@ module Inoculate
       nil
     end
 
+    # Register an instance dependency.
+    # @see Manufacturer#instance
+    #
+    # @since 0.3.0
+    def instance(name, &block)
+      manufacturer.instance(name, &block)
+      nil
+    end
+
     private
 
     attr_reader :manufacturer
