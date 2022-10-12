@@ -34,6 +34,7 @@ module Inoculate
     attr_reader registered_blueprints: Hash[builder_name, blueprint]
     def transient: (builder_name | _ToSymbol) { () -> void } -> void
     def instance: (builder_name | _ToSymbol) { () -> void } -> void
+    def singleton: (builder_name | _ToSymbol) { () -> void } -> void
   end
 
   class Configurer
@@ -41,6 +42,7 @@ module Inoculate
 
     def transient: (builder_name | _ToSymbol) { () -> void } -> nil
     def instance: (builder_name | _ToSymbol) { () -> void } -> nil
+    def singleton: (builder_name | _ToSymbol) { () -> void } -> nil
 
     private
 

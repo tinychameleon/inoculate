@@ -15,7 +15,7 @@ RSpec.describe "Inoculate::Manufacturer" do
 
   context "builders" do
     context "registering" do
-      [:transient, :instance].each do |lifecycle|
+      [:transient, :instance, :singleton].each do |lifecycle|
         it "#{lifecycle} does not silently shadow registered names" do
           subject.send(lifecycle, :service, &-> { 1 })
           expect { subject.send(lifecycle, :service, &-> { 2 }) }.to raise_error Inoculate::Errors::AlreadyRegistered
@@ -63,6 +63,10 @@ RSpec.describe "Inoculate::Manufacturer" do
     context "instance" do
       include_examples "life cycle checks", :instance
     end
+
+    context "singleton" do
+      include_examples "life cycle checks", :singleton
+    end
   end
 
   context "building" do
@@ -99,9 +103,34 @@ RSpec.describe "Inoculate::Manufacturer" do
       it "creates a new object once per instance" do
         d1 = dependent.new
         expect(d1.send(name).object_id).to eq d1.send(name).object_id
+
         d2 = dependent.new
         expect(d1.send(name).object_id).not_to eq d2.send(name).object_id
       end
     end
+
+    context "singleton" do
+      subject(:dependent) { Class.new.include(accessor_module) }
+      subject(:other_dependent) { Class.new.include(accessor_module) }
+      let(:lifecycle) { :singleton }
+
+      include_examples "dependency provider module"
+
+      it "creates a new object once" do
+        d1 = dependent.new
+        expect(d1.send(name).object_id).to eq d1.send(name).object_id
+
+        d2 = dependent.new
+        expect(d1.send(name).object_id).to eq d2.send(name).object_id
+
+        od1 = other_dependent.new
+        expect(d1.send(name).object_id).to eq od1.send(name).object_id
+
+        other_thread_object_id = nil
+        Thread.new { other_thread_object_id = other_dependent.new.send(name).object_id }.join
+        expect(d1.send(name).object_id).to eq other_thread_object_id
+      end
+    end
+
   end
 end

@@ -16,4 +16,10 @@ RSpec.describe "Inoculate::Configurer" do
     expect(configurer.instance(:service, &callable)).to be_nil
     expect(manufacturer).to have_received(:instance).with(:service, &callable)
   end
+
+  it "allows singleton registrations" do
+    callable = -> { 1 }
+    expect(configurer.singleton(:service, &callable)).to be_nil
+    expect(manufacturer).to have_received(:singleton).with(:service, &callable)
+  end
 end

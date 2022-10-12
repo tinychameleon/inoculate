@@ -25,6 +25,7 @@ It provides several life-cycles and provides dependency access through private a
    1. [Dependency Life Cycles](#dependency-life-cycles)
       1. [Transient](#transient)
       2. [Instance](#instance)
+      3. [Singleton](#singleton)
    2. [Renaming the Declaration API](#renaming-the-declaration-api)
    3. [Hide Your Dependency on Inoculate](#hide-your-dependency-on-inoculate)
 3. [Installation](#installation)
@@ -100,12 +101,15 @@ class Example
    end
 end
 
-puts Example.new
+a = Example.new
+puts a, a, a
 ```
 
 This results in:
 
 ```
+Count is: 0
+Count is: 0
 Count is: 0
 => nil    
 ```
@@ -156,6 +160,54 @@ This results in:
 [a] Count is: 2
 [b] Count is: 1
 => nil  
+```
+
+#### Singleton
+Singleton dependencies are constructed once.
+
+```ruby
+class Counter
+   attr_reader :count
+
+   def initialize
+      @count = 0
+   end
+   
+   def inc
+      @count += 1
+   end
+end
+
+Inoculate.initialize do |config|
+   config.singleton(:counter) { Counter.new }
+end
+
+class Example
+   include Inoculate::Porter
+   inoculate_with :counter
+   
+   def initialize(name)
+      @name = name
+   end
+   
+   def to_s
+      counter.inc
+      "[#{@name}] Count is: #{counter.count}"
+   end
+end
+
+a = Example.new("a")
+b = Example.new("b")
+puts a, a, b
+```
+
+This results in:
+
+```
+[a] Count is: 1
+[a] Count is: 2                         
+[b] Count is: 3                         
+=> nil   
 ```
 
 ### Renaming the Declaration API

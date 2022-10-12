@@ -5,7 +5,6 @@ require "digest"
 module Inoculate
   # Registers and builds dependency injection modules.
   # @todo singleton life cycle
-  # @todo instance life cycle
   # @todo thread singleton life cycle
   #
   # @since 0.1.0
@@ -40,16 +39,7 @@ module Inoculate
     #
     # @since 0.1.0
     def transient(name, &block)
-      validate_dependency_name name
-      raise Errors::AlreadyRegistered if @registered_blueprints.has_key? name
-      raise Errors::RequiresCallable if block.nil?
-
-      blueprint_name = name.to_sym
-      @registered_blueprints[blueprint_name] = {
-        lifecycle: :transient,
-        factory: block,
-        accessor_module: build_module(blueprint_name, :transient, block)
-      }
+      register_blueprint(name, :transient, &block)
     end
 
     # Register an instance dependency.
@@ -72,26 +62,54 @@ module Inoculate
     #
     # @since 0.3.0
     def instance(name, &block)
+      register_blueprint(name, :instance, &block)
+    end
+
+    # Register a singleton dependency.
+    #
+    # A singleton dependency gets created once.
+    #
+    # @example With a block
+    #   manufacturer.singleton(:sha1_hasher) { Digest::SHA1.new }
+    #
+    # @example With a Proc
+    #   manufacturer.singleton(:sha1_hasher, &-> { Digest::SHA1.new })
+    #
+    # @param name [Symbol, #to_sym] the dependency name which will be used to access it
+    # @param block [Block, Proc] a factory method to build the dependency
+    #
+    # @raise [Errors::RequiresCallable] if no block is provided
+    # @raise [Errors::InvalidName] if the name is not a symbol, cannot be converted to a symbol,
+    #                              or is not a valid attribute name
+    # @raise [Errors::AlreadyRegistered] if the name has been registered previously
+    #
+    # @since 0.4.0
+    def singleton(name, &block)
+      register_blueprint(name, :singleton, &block)
+    end
+
+    private
+
+    def register_blueprint(name, lifecycle, &block)
       validate_dependency_name name
       raise Errors::AlreadyRegistered if @registered_blueprints.has_key? name
       raise Errors::RequiresCallable if block.nil?
 
       blueprint_name = name.to_sym
       @registered_blueprints[blueprint_name] = {
-        lifecycle: :instance,
+        lifecycle: lifecycle,
         factory: block,
-        accessor_module: build_module(blueprint_name, :instance, block)
+        accessor_module: build_module(blueprint_name, lifecycle, block)
       }
     end
 
-    private
-
     def build_module(name, lifecycle, factory)
-      module_name = "I#{Digest::SHA1.hexdigest(name.to_s)}"
+      module_name = "I#{hash_name(name)}"
       module_body =
         case lifecycle
         when :transient then build_transient(name, factory)
         when :instance then build_instance(name, factory)
+        when :singleton then build_singleton(name, factory)
         else raise ArgumentError, "Life cycle #{lifecycle} is not valid. Something has gone very wrong."
         end
 
@@ -105,11 +123,22 @@ module Inoculate
     end
 
     def build_instance(name, factory)
-      cache_variable_name = "@icache_#{Digest::SHA1.hexdigest(name.to_s)}"
+      cache_variable_name = "@icache_#{hash_name(name)}"
       Module.new do
         define_method(name) do
           instance_variable_set(cache_variable_name, factory.call) unless instance_variable_defined?(cache_variable_name)
           instance_variable_get(cache_variable_name)
+        end
+        private name
+      end
+    end
+
+    def build_singleton(name, factory)
+      cache_variable_name = "@@icache_#{hash_name(name)}"
+      Module.new do |mod|
+        define_method(name) do
+          mod.class_variable_set(cache_variable_name, factory.call) unless mod.class_variable_defined?(cache_variable_name)
+          mod.class_variable_get(cache_variable_name)
         end
         private name
       end
@@ -122,6 +151,10 @@ module Inoculate
       rescue NameError
         raise Errors::InvalidName, "name must be a valid attr_reader"
       end
+    end
+
+    def hash_name(name)
+      Digest::SHA1.hexdigest(name.to_s)
     end
   end
 end

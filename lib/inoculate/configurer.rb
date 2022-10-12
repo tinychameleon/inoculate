@@ -27,6 +27,15 @@ module Inoculate
       nil
     end
 
+    # Register a singleton dependency.
+    # @see Manufacturer#singleton
+    #
+    # @since 0.4.0
+    def singleton(name, &block)
+      manufacturer.singleton(name, &block)
+      nil
+    end
+
     private
 
     attr_reader :manufacturer

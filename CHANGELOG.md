@@ -1,3 +1,7 @@
+## v0.4.0 \[Unreleased]
+
+* Add singleton dependency registration.
+
 ## v0.3.0 \[2022-10-11]
 
 * Add instance dependency registration.
