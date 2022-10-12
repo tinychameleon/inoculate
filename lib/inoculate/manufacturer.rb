@@ -28,34 +28,27 @@ module Inoculate
     #   manufacturer.transient(:sha1_hasher) { Digest::SHA1.new }
     #
     # @example With a Proc
-    #   manufacturer.transient(:sha1_hasher, -> { Digest::SHA1.new })
-    #
-    # @example With anything Callable
-    #   class HashingBuilder
-    #     def call = Digest::SHA1.new
-    #   end
-    #   manufacturer.transient(:sha1_hasher, HashingBuilder.new)
+    #   manufacturer.transient(:sha1_hasher, &-> { Digest::SHA1.new })
     #
     # @param name [Symbol, #to_sym] the dependency name which will be used to access it
-    # @param builder [#call] the callable to build the dependency
-    # @param block [Proc, nil] an alternative builder callable
+    # @param block [Block, Proc] a factory method to build the dependency
     #
-    # @raise [Errors::RequiresCallable] if no builder or block is provided
+    # @raise [Errors::RequiresCallable] if no block is provided
     # @raise [Errors::InvalidName] if the name is not a symbol, cannot be converted to a symbol,
     #                              or is not a valid attribute name
     # @raise [Errors::AlreadyRegistered] if the name has been registered previously
     #
     # @since 0.1.0
-    def transient(name, builder = nil, &block)
+    def transient(name, &block)
       validate_builder_name name
       raise Errors::AlreadyRegistered if @registered_blueprints.has_key? name
-      raise Errors::RequiresCallable unless builder.respond_to?(:call) || block
+      raise Errors::RequiresCallable if block.nil?
 
       blueprint_name = name.to_sym
       @registered_blueprints[blueprint_name] = {
         lifecycle: :transient,
-        builder: builder || block,
-        accessor_module: build_module(blueprint_name, :transient, builder || block)
+        factory: block,
+        accessor_module: build_module(blueprint_name, :transient, block)
       }
     end
 

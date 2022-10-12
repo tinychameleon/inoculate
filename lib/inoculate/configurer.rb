@@ -13,8 +13,9 @@ module Inoculate
     # @see Manufacturer#transient
     #
     # @since 0.1.0
-    def transient(name, builder = nil, &block)
-      manufacturer.transient(name, builder, &block)
+    def transient(name, &block)
+      manufacturer.transient(name, &block)
+      nil
     end
 
     private

@@ -7,13 +7,7 @@ RSpec.describe "Inoculate::Configurer" do
 
   it "allows transient registrations" do
     callable = -> { 1 }
-    configurer.transient(:service, callable)
-    expect(manufacturer).to have_received(:transient).with(:service, callable)
-  end
-
-  it "allows transient registrations with blocks" do
-    callable = -> { 1 }
-    configurer.transient(:service, &callable)
-    expect(manufacturer).to have_received(:transient).with(:service, nil, &callable)
+    expect(configurer.transient(:service, &callable)).to be_nil
+    expect(manufacturer).to have_received(:transient).with(:service, &callable)
   end
 end
