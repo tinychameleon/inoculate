@@ -218,6 +218,30 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#thread_singleton-instance_method" title="#thread_singleton (instance method)">#<strong>thread_singleton</strong>(name, &amp;block)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Register a thread singleton dependency.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#transient-instance_method" title="#transient (instance method)">#<strong>transient</strong>(name, &amp;block)  &#x21d2; Object </a>
     
 
@@ -442,6 +466,72 @@
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="thread_singleton-instance_method">
+  
+    #<strong>thread_singleton</strong>(name, &amp;block)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Register a thread singleton dependency.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="Manufacturer.html#thread_singleton-instance_method" title="Inoculate::Manufacturer#thread_singleton (method)">Manufacturer#thread_singleton</a></span></li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.5.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+43
+44
+45
+46</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/inoculate/configurer.rb', line 43</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_thread_singleton'>thread_singleton</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_manufacturer'>manufacturer</span><span class='period'>.</span><span class='id identifier rubyid_thread_singleton'>thread_singleton</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="transient-instance_method">
   
     #<strong>transient</strong>(name, &amp;block)  &#x21d2; <tt>Object</tt> 
@@ -512,7 +602,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Oct 13 08:18:08 2022 by
+  Generated on Thu Oct 13 08:50:26 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.2).
 </div>

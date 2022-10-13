@@ -1,3 +1,7 @@
+## v0.5.0 \[2022-10-13]
+
+* Add thread singleton dependency registration.
+
 ## v0.4.0 \[2022-10-13]
 
 * Add singleton dependency registration.
