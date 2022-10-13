@@ -26,6 +26,7 @@ It provides several life-cycles and provides dependency access through private a
       1. [Transient](#transient)
       2. [Instance](#instance)
       3. [Singleton](#singleton)
+      4. [Thread Singleton](#thread-singleton)
    2. [Renaming the Declaration API](#renaming-the-declaration-api)
    3. [Hide Your Dependency on Inoculate](#hide-your-dependency-on-inoculate)
 3. [Installation](#installation)
