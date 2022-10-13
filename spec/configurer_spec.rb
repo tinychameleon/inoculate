@@ -22,4 +22,10 @@ RSpec.describe "Inoculate::Configurer" do
     expect(configurer.singleton(:service, &callable)).to be_nil
     expect(manufacturer).to have_received(:singleton).with(:service, &callable)
   end
+
+  it "allows thread singleton registrations" do
+    callable = -> { 1 }
+    expect(configurer.thread_singleton(:service, &callable)).to be_nil
+    expect(manufacturer).to have_received(:thread_singleton).with(:service, &callable)
+  end
 end

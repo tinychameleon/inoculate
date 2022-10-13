@@ -36,6 +36,15 @@ module Inoculate
       nil
     end
 
+    # Register a thread singleton dependency.
+    # @see Manufacturer#thread_singleton
+    #
+    # @since 0.5.0
+    def thread_singleton(name, &block)
+      manufacturer.thread_singleton(name, &block)
+      nil
+    end
+
     private
 
     attr_reader :manufacturer

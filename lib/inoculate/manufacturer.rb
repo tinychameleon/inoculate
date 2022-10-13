@@ -88,6 +88,29 @@ module Inoculate
       register_blueprint(name, :singleton, &block)
     end
 
+    # Register a thread singleton dependency.
+    #
+    # A thread singleton dependency gets created once per thread or fiber.
+    #
+    # @example With a block
+    #   manufacturer.thread_singleton(:sha1_hasher) { Digest::SHA1.new }
+    #
+    # @example With a Proc
+    #   manufacturer.thread_singleton(:sha1_hasher, &-> { Digest::SHA1.new })
+    #
+    # @param name [Symbol, #to_sym] the dependency name which will be used to access it
+    # @param block [Block, Proc] a factory method to build the dependency
+    #
+    # @raise [Errors::RequiresCallable] if no block is provided
+    # @raise [Errors::InvalidName] if the name is not a symbol, cannot be converted to a symbol,
+    #                              or is not a valid attribute name
+    # @raise [Errors::AlreadyRegistered] if the name has been registered previously
+    #
+    # @since 0.5.0
+    def thread_singleton(name, &block)
+      register_blueprint(name, :thread_singleton, &block)
+    end
+
     private
 
     def register_blueprint(name, lifecycle, &block)
@@ -110,6 +133,7 @@ module Inoculate
         when :transient then build_transient(name, factory)
         when :instance then build_instance(name, factory)
         when :singleton then build_singleton(name, factory)
+        when :thread_singleton then build_thread_singleton(name, factory)
         else raise ArgumentError, "Life cycle #{lifecycle} is not valid. Something has gone very wrong."
         end
 
@@ -141,6 +165,13 @@ module Inoculate
           mod.class_variable_get(cache_variable_name)
         end
         private name
+      end
+    end
+
+    def build_thread_singleton(name, factory)
+      thread_variable_name = "icache_#{hash_name(name)}"
+      Module.new do
+        private define_method(name) { Thread.current[thread_variable_name] ||= factory.call }
       end
     end
 

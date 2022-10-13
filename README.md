@@ -210,6 +210,80 @@ This results in:
 => nil   
 ```
 
+#### Thread Singleton
+Thread Singleton dependencies are constructed once for any thread or fiber.
+
+```ruby
+class Counter
+   attr_reader :count
+
+   def initialize
+      @count = 0
+   end
+   
+   def inc
+      @count += 1
+   end
+end
+
+Inoculate.initialize do |config|
+   config.thread_singleton(:counter) { Counter.new }
+end
+
+class Example
+   include Inoculate::Porter
+   inoculate_with :counter
+   
+   def initialize(name)
+      @name = "Example: #{name}"
+   end
+   
+   def to_s
+      counter.inc
+      "[#{@name}] Count is: #{counter.count}"
+   end
+end
+
+class AnotherExample
+   include Inoculate::Porter
+   inoculate_with :counter
+
+   def initialize(name)
+      @name = "AnotherExample: #{name}"
+   end
+
+   def to_s
+      5.times { counter.inc }
+      "[#{@name}] Count is: #{counter.count}"
+   end
+end
+
+threads = %w[a b].map do |tag|
+   Thread.new(tag) do |t|
+      e = Example.new(t)
+      a = AnotherExample.new(t)
+      puts e, e, a, a
+   end
+end
+
+threads.each(&:join)
+```
+
+This results in:
+
+```
+[Example: a] Count is: 1
+[Example: b] Count is: 1
+[Example: b] Count is: 2
+[Example: a] Count is: 2
+[AnotherExample: b] Count is: 7
+[AnotherExample: a] Count is: 7
+[AnotherExample: b] Count is: 12
+[AnotherExample: a] Count is: 12
+=> [#<Thread:0x000000010d703c68 (irb):177 dead>, #<Thread:0x000000010d703b50 (irb):177 dead>]
+```
+
+
 ### Renaming the Declaration API
 The `inoculate_with` API is named to avoid immediate collisions with other modules
 and code you may have. You can use it as-is, or rename it to something you see fit
