@@ -102,21 +102,6 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-  <div class="note todo">
-    <strong>TODO:</strong>
-    <div class='inline'>
-<p>singleton life cycle</p>
-</div>
-  </div>
-
-  <div class="note todo">
-    <strong>TODO:</strong>
-    <div class='inline'>
-<p>thread singleton life cycle</p>
-</div>
-  </div>
-
-
 <p>Registers and builds dependency injection modules.</p>
 
 
@@ -360,12 +345,12 @@
       <pre class="lines">
 
 
-18
-19
-20</pre>
+16
+17
+18</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/inoculate/manufacturer.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'lib/inoculate/manufacturer.rb', line 16</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
   <span class='ivar'>@registered_blueprints</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -437,12 +422,12 @@
       <pre class="lines">
 
 
-16
-17
-18</pre>
+14
+15
+16</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/inoculate/manufacturer.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'lib/inoculate/manufacturer.rb', line 14</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_registered_blueprints'>registered_blueprints</span>
   <span class='ivar'>@registered_blueprints</span>
@@ -604,12 +589,12 @@
       <pre class="lines">
 
 
-64
-65
-66</pre>
+62
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/inoculate/manufacturer.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'lib/inoculate/manufacturer.rb', line 62</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_instance'>instance</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_register_blueprint'>register_blueprint</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='symbol'>:instance</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
@@ -764,12 +749,12 @@
       <pre class="lines">
 
 
-87
-88
-89</pre>
+85
+86
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/inoculate/manufacturer.rb', line 87</span>
+      <pre class="code"><span class="info file"># File 'lib/inoculate/manufacturer.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_singleton'>singleton</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_register_blueprint'>register_blueprint</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='symbol'>:singleton</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
@@ -924,12 +909,12 @@
       <pre class="lines">
 
 
-110
-111
-112</pre>
+108
+109
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/inoculate/manufacturer.rb', line 110</span>
+      <pre class="code"><span class="info file"># File 'lib/inoculate/manufacturer.rb', line 108</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_thread_singleton'>thread_singleton</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_register_blueprint'>register_blueprint</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='symbol'>:thread_singleton</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
@@ -1084,12 +1069,12 @@
       <pre class="lines">
 
 
-41
-42
-43</pre>
+39
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/inoculate/manufacturer.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'lib/inoculate/manufacturer.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_transient'>transient</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_register_blueprint'>register_blueprint</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='symbol'>:transient</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
@@ -1104,7 +1089,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Oct 13 08:54:24 2022 by
+  Generated on Thu Oct 13 09:00:27 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.2).
 </div>

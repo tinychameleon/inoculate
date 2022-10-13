@@ -4,8 +4,6 @@ require "digest"
 
 module Inoculate
   # Registers and builds dependency injection modules.
-  # @todo singleton life cycle
-  # @todo thread singleton life cycle
   #
   # @since 0.1.0
   class Manufacturer
