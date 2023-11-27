@@ -62,7 +62,7 @@ require "inoculate"
 class HistogramGraph
   include Inoculate::Porter
   inoculate_with :counter
-  
+
   def to_s
     counter.to_s
   end
@@ -82,7 +82,7 @@ class Counter
    def initialize
       @count = 0
    end
-   
+
    def inc
       @count += 1
    end
@@ -95,7 +95,7 @@ end
 class Example
    include Inoculate::Porter
    inoculate_with :counter
-   
+
    def to_s
       counter.inc
       "Count is: #{counter.count}"
@@ -112,7 +112,7 @@ This results in:
 Count is: 0
 Count is: 0
 Count is: 0
-=> nil    
+=> nil
 ```
 
 #### Instance
@@ -125,7 +125,7 @@ class Counter
    def initialize
       @count = 0
    end
-   
+
    def inc
       @count += 1
    end
@@ -138,11 +138,11 @@ end
 class Example
    include Inoculate::Porter
    inoculate_with :counter
-   
+
    def initialize(name)
       @name = name
    end
-   
+
    def to_s
       counter.inc
       "[#{@name}] Count is: #{counter.count}"
@@ -160,7 +160,7 @@ This results in:
 [a] Count is: 1
 [a] Count is: 2
 [b] Count is: 1
-=> nil  
+=> nil
 ```
 
 #### Singleton
@@ -173,7 +173,7 @@ class Counter
    def initialize
       @count = 0
    end
-   
+
    def inc
       @count += 1
    end
@@ -186,11 +186,11 @@ end
 class Example
    include Inoculate::Porter
    inoculate_with :counter
-   
+
    def initialize(name)
       @name = name
    end
-   
+
    def to_s
       counter.inc
       "[#{@name}] Count is: #{counter.count}"
@@ -206,9 +206,9 @@ This results in:
 
 ```
 [a] Count is: 1
-[a] Count is: 2                         
-[b] Count is: 3                         
-=> nil   
+[a] Count is: 2
+[b] Count is: 3
+=> nil
 ```
 
 #### Thread Singleton
@@ -221,7 +221,7 @@ class Counter
    def initialize
       @count = 0
    end
-   
+
    def inc
       @count += 1
    end
@@ -234,11 +234,11 @@ end
 class Example
    include Inoculate::Porter
    inoculate_with :counter
-   
+
    def initialize(name)
       @name = "Example: #{name}"
    end
-   
+
    def to_s
       counter.inc
       "[#{@name}] Count is: #{counter.count}"
@@ -328,10 +328,10 @@ $ gem install inoculate
 ### Supported Ruby Versions
 Inoculate is tested against the following Ruby versions:
 
-- 2.7
 - 3.0
 - 3.1
-- 3.2-rc
+- 3.2
+- 3.3.0-preview1
 
 ## Development
 After checking out the repo:
