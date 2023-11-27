@@ -146,7 +146,7 @@ module Inoculate
 			end
 
 			def build_instance(name, factory)
-				varname = "@_inoculate_cache_#{hash_name(name)}"
+				varname = lookup_iname(name)
 				Module.new do
 					define_method(name) do
 						instance_variable_set(varname, Lifecycle::Instance.new(&factory)) \
@@ -158,21 +158,25 @@ module Inoculate
 			end
 
 			def build_singleton(name, factory)
-				varname = "@_inoculate_cache_#{hash_name(name)}"
+				varname = lookup_iname(name)
 				Module.new do |mod|
 					define_method(name) do
 						mod.instance_variable_set(varname, Lifecycle::Instance.new(&factory)) \
 							unless mod.instance_variable_defined?(varname)
-						mod.instance_variable_get(varname)
+						mod.instance_variable_get(varname).obtain
 					end
 					private name
 				end
 			end
 
 			def build_thread_singleton(name, factory)
-				thread_variable_name = "icache_#{hash_name(name)}"
+				varname = lookup_name(name)
 				Module.new do
-					private define_method(name) { Thread.current[thread_variable_name] ||= factory.call }
+					define_method(name) do
+						Thread.current[varname] ||= Lifecycle::Instance.new(&factory)
+						Thread.current[varname].obtain
+					end
+					private name
 				end
 			end
 
@@ -184,6 +188,14 @@ module Inoculate
 				rescue NameError
 					raise Errors::InvalidName, "name must be a valid attr_reader"
 				end
+			end
+
+			def lookup_iname(name)
+				"@#{lookup_name(name)}"
+			end
+
+			def lookup_name(name)
+				"_inoculate_cache_#{hash_name(name)}"
 			end
 
 			def hash_name(name)
