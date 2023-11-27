@@ -18,7 +18,7 @@ end
 RSpec::Core::RakeTask.new(:spec)
 
 YARD::Rake::YardocTask.new do |t|
-	t.before = -> { sh("rm -r ./docs") }
+	t.before = -> { sh("rm -fr ./docs") }
 	t.files = %w[lib/**/*.rb - CHANGELOG.md]
 	t.options = %w[-o ./docs]
 end
