@@ -158,15 +158,14 @@ module Inoculate
 			end
 
 			def build_singleton(name, factory)
-				cache_variable_name = "@_inoculate_cache_#{hash_name(name)}"
+				varname = "@_inoculate_cache_#{hash_name(name)}"
 				Module.new do |mod|
-					private
-
-						define_method(name) do
-							mod.instance_variable_set(cache_variable_name, factory.call) \
-								unless mod.instance_variable_defined?(cache_variable_name)
-							mod.instance_variable_get(cache_variable_name)
-						end
+					define_method(name) do
+						mod.instance_variable_set(varname, Lifecycle::Instance.new(&factory)) \
+							unless mod.instance_variable_defined?(varname)
+						mod.instance_variable_get(varname)
+					end
+					private name
 				end
 			end
 
