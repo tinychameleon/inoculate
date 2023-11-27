@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-# Inoculate is a small, thread-safe dependency injection library configured entirely with Ruby.
-# It provides several life-cycles and provides dependency access through private accessors.
-#
-# @since 0.1.0
 module Inoculate
 	# The main configuration entrypoint for Inoculate. Use this to set up named dependencies.
 	#

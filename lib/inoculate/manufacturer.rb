@@ -139,8 +139,9 @@ module Inoculate
 			end
 
 			def build_transient(name, factory)
+				t = Lifecycle::Transient.new(&factory)
 				Module.new do
-					private define_method(name) { factory.call }
+					private define_method(name) { t.obtain }
 				end
 			end
 
