@@ -146,15 +146,14 @@ module Inoculate
 			end
 
 			def build_instance(name, factory)
-				cache_variable_name = "@icache_#{hash_name(name)}"
+				varname = "@_inoculate_cache_#{hash_name(name)}"
 				Module.new do
-					private
-
-						define_method(name) do
-							instance_variable_set(cache_variable_name, factory.call) \
-								unless instance_variable_defined?(cache_variable_name)
-							instance_variable_get(cache_variable_name)
-						end
+					define_method(name) do
+						instance_variable_set(varname, Lifecycle::Instance.new(&factory)) \
+							unless instance_variable_defined?(varname)
+						instance_variable_get(varname).obtain
+					end
+					private name
 				end
 			end
 

@@ -5,4 +5,5 @@
 module Inoculate::Lifecycle
 end
 
+require_relative "lifecycle/instance"
 require_relative "lifecycle/transient"

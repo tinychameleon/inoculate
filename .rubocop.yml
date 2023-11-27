@@ -10,3 +10,8 @@ Metrics/BlockLength:
     - describe
     - context
     - shared_examples
+
+# This gem does meta-programming and calling `private` with an argument makes
+# the code far more readable.
+Style/AccessModifierDeclarations:
+  Enabled: false
