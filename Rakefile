@@ -4,7 +4,7 @@ require "bundler/gem_tasks"
 require "rspec/core/rake_task"
 require "yard"
 
-SUPPORTED_RUBY_VERSIONS = %w[2.7 3.0 3.1 3.2-rc]
+SUPPORTED_RUBY_VERSIONS = %w[3.0 3.1 3.2 3.3.0-preview1]
 
 desc "Run specs against all Ruby versions and platforms"
 task "spec:all" do
