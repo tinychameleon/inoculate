@@ -1,0 +1,12 @@
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.0
+
+inherit_gem:
+  accessiblerb: rules.yml
+
+Metrics/BlockLength:
+  AllowedPatterns:
+    - describe
+    - context
+    - shared_examples
